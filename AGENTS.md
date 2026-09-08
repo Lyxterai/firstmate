@@ -84,7 +84,7 @@ Treat `data/captain.md` as the domain-local record of captain preferences, optio
 ## 3. Session start (run once at every session start)
 
 Run `bin/fm-session-start.sh` exactly once at session start.
-Its header is the single owner of composed commands, ordering, digest contents, and the session-start steps with their exact names and per-step edge cases; do not re-derive or duplicate that enumeration here.
+Its header is the single owner of composed commands, ordering, digest contents, and the session-start steps with their exact names and what each one does; do not re-derive or duplicate that enumeration here, but the `ABSENT` marker's meaning, the lock-refused prohibition, and the current-state reconciliation read below are agent obligations this section deliberately states rather than duplicates of that header, and none of them may be trimmed as re-derived detail.
 `bin/fm-supervision-instructions.sh` renders the emitted supervision block from `docs/supervision-protocols/`.
 Do not reimplement it by separately running its lock, bootstrap, initial wake-drain, or deferred-network components.
 Run-tier harness surfaces run this command for you at session open while the rest only nudge it, so confirm the digest is present in this session and run it yourself when it is not; `docs/sessionstart-nudge.md` owns adapter tiers, source routing, and compatibility.
