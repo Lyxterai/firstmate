@@ -102,8 +102,8 @@ Every network check a session start owes - GitHub auth, dead-secondmate relaunch
 The locked startup inactive-outcome scan joins that worker so a slow local current-state read cannot block the digest; its findings use the ordinary durable wake queue.
 When that section reports its checks still in progress it names exactly what is unconfirmed; treat none of those as passed until `bin/fm-startup-network.sh report` returns the finished result, while a failed or otherwise actionable result also arrives as a `check: startup-network` wake.
 
-The seven steps - lock, bootstrap, wake queue, supervision operating instructions, fleet-state digest, network checks, context digest - and their exact ordering, contents, and edge cases (lock-refused behavior, what each digest section contains, absence markers) are `bin/fm-session-start.sh`'s header alone; do not re-derive or duplicate them here.
-Two facts stay inline because they govern how you READ the digest rather than what it contains: an `OPEN DECISIONS`, `UNREAD STATUS`, `RECORD DIVERGENCE`, or `STATUS OUTCOME BACKSTOP` section from the wake-queue step is actionable input even when no queue row remains, and current-state reconciliation (`bin/fm-crew-state.sh <id>`) is a separate read the fleet-state digest's fast liveness check deliberately skips.
+The session-start steps and their exact names, ordering, contents, and edge cases (lock-refused behavior, what each digest section contains, absence markers) are `bin/fm-session-start.sh`'s header alone; do not re-derive or duplicate them here.
+One fact stays inline because it governs how you READ the digest rather than what it contains: current-state reconciliation (`bin/fm-crew-state.sh <id>`) is a separate read the fleet-state digest's fast liveness check deliberately skips.
 
 Bootstrap detects first, asks for consent, and installs only after the captain approves in the current session.
 Do not dispatch until the required tools are present and GitHub authentication is good.
@@ -327,6 +327,7 @@ Session start is the only exception because its one-shot digest already presente
 Treat any `OPEN DECISIONS` section from the drain as actionable reconciliation input even when no wake record was queued.
 Treat any `UNREAD STATUS` section as newly surfaced status that must be read this turn; those lines are not re-printed after this presentation.
 Treat any `RECORD DIVERGENCE` section as a contradiction between two records of one captain call, never as proof the captain ruled; load `captain-hold-lifecycle` and reconcile it in whichever direction the evidence supports.
+Treat any `STATUS OUTCOME BACKSTOP` section as a bounded one-shot report that a task's newest captain-facing status event has no covering supervision-branch outcome; handle it as a recovered wake even when no queue row remains.
 After handling all emitted wakes and reconciling the OPEN DECISIONS and UNREAD STATUS sections, run the exact generation-bound `--ack-through` command printed as `WAKE_ACK_REQUIRED`; interruption before that acknowledgement deliberately leaves the work durable for idempotent re-handling.
 A status line is a wake event, not current state; use `bin/fm-crew-state.sh` when current state matters, especially before re-escalating an old decision, blocker, or pause.
 A declared `paused:` event means a bounded external wait expected to clear on its own, while `blocked:` means firstmate action is needed.
