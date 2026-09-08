@@ -76,7 +76,7 @@ state/               runtime records and signals; gitignored
 ```
 
 No `config/*`, `data/*`, or `state/*` child belongs in the block above: its exact fields, LOCAL/inherited status, and owning script belong to the two owners named at the start of this section, and re-deriving one here is how this file regrows.
-Never hand-edit or delete a `state/` record a script owns - the watcher, wake-queue, sub-supervisor, turn-end auto-arm, supervision-lease, and supervision-branch internals - because that script is its only safe writer.
+Never hand-edit or delete any `state/` record a script owns, whichever script that is, because that script is its only safe writer.
 
 A `state/<id>.status` line is a wake event, not current-state truth; `bin/fm-crew-state.sh` owns current-state reconciliation.
 Treat `data/captain.md` as the domain-local record of captain preferences, optional `data/captain-shared.md` as the main-authoritative shared captain-preference file for secondmate inheritance, and `data/learnings.md` as curated home-local knowledge, regardless of harness memory.
@@ -84,7 +84,7 @@ Treat `data/captain.md` as the domain-local record of captain preferences, optio
 ## 3. Session start (run once at every session start)
 
 Run `bin/fm-session-start.sh` exactly once at session start.
-Its header is the single owner of composed commands, ordering, and digest contents.
+Its header is the single owner of composed commands, ordering, digest contents, and the session-start steps with their exact names and per-step edge cases; do not re-derive or duplicate that enumeration here.
 `bin/fm-supervision-instructions.sh` renders the emitted supervision block from `docs/supervision-protocols/`.
 Do not reimplement it by separately running its lock, bootstrap, initial wake-drain, or deferred-network components.
 Run-tier harness surfaces run this command for you at session open while the rest only nudge it, so confirm the digest is present in this session and run it yourself when it is not; `docs/sessionstart-nudge.md` owns adapter tiers, source routing, and compatibility.
@@ -102,8 +102,7 @@ Every network check a session start owes - GitHub auth, dead-secondmate relaunch
 The locked startup inactive-outcome scan joins that worker so a slow local current-state read cannot block the digest; its findings use the ordinary durable wake queue.
 When that section reports its checks still in progress it names exactly what is unconfirmed; treat none of those as passed until `bin/fm-startup-network.sh report` returns the finished result, while a failed or otherwise actionable result also arrives as a `check: startup-network` wake.
 
-The session-start steps and their exact names, ordering, contents, and per-step edge cases are `bin/fm-session-start.sh`'s header alone; do not re-derive or duplicate that enumeration here.
-One fact from that enumeration stays inline because it governs how you READ the digest rather than what it contains: current-state reconciliation (`bin/fm-crew-state.sh <id>`) is a separate read the fleet-state digest's fast liveness check deliberately skips.
+One fact from those session-start steps stays inline because it governs how you READ the digest rather than what it contains: current-state reconciliation (`bin/fm-crew-state.sh <id>`) is a separate read the fleet-state digest's fast liveness check deliberately skips.
 
 Bootstrap detects first, asks for consent, and installs only after the captain approves in the current session.
 Do not dispatch until the required tools are present and GitHub authentication is good.
