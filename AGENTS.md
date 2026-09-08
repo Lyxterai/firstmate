@@ -102,8 +102,8 @@ Every network check a session start owes - GitHub auth, dead-secondmate relaunch
 The locked startup inactive-outcome scan joins that worker so a slow local current-state read cannot block the digest; its findings use the ordinary durable wake queue.
 When that section reports its checks still in progress it names exactly what is unconfirmed; treat none of those as passed until `bin/fm-startup-network.sh report` returns the finished result, while a failed or otherwise actionable result also arrives as a `check: startup-network` wake.
 
-The session-start steps and their exact names, ordering, contents, and edge cases (lock-refused behavior, what each digest section contains, absence markers) are `bin/fm-session-start.sh`'s header alone; do not re-derive or duplicate them here.
-One fact stays inline because it governs how you READ the digest rather than what it contains: current-state reconciliation (`bin/fm-crew-state.sh <id>`) is a separate read the fleet-state digest's fast liveness check deliberately skips.
+The session-start steps and their exact names, ordering, contents, and per-step edge cases are `bin/fm-session-start.sh`'s header alone; do not re-derive or duplicate that enumeration here.
+One fact from that enumeration stays inline because it governs how you READ the digest rather than what it contains: current-state reconciliation (`bin/fm-crew-state.sh <id>`) is a separate read the fleet-state digest's fast liveness check deliberately skips.
 
 Bootstrap detects first, asks for consent, and installs only after the captain approves in the current session.
 Do not dispatch until the required tools are present and GitHub authentication is good.
