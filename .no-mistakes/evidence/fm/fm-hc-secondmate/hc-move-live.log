@@ -1,0 +1,89 @@
+lab core session fm-hclab-smate-95924-18009 ready (server pid 95996)
+
+### existing record (before move)
+kind=secondmate
+backend=herdr
+home=<tmp>/fm-backend-hc-smate.Mu75YQ/mate
+harness=opencode
+
+### adversarial: move to cmux (not secondmate-capable)
+error: backend=cmux does not support --secondmate spawns yet (secondmate-capable: tmux herdr zellij rex t3code hc)
+exit=1
+
+### adversarial: move to orca
+error: backend=orca does not support --secondmate spawns yet (secondmate-capable: tmux herdr zellij rex t3code hc)
+exit=1
+
+### adversarial: move to unknown backend
+error: unknown backend 'nosuch' (known: tmux herdr zellij orca cmux paseo rex t3code tern hc)
+exit=1
+
+### record unchanged after refusals
+kind=secondmate
+backend=herdr
+home=<tmp>/fm-backend-hc-smate.Mu75YQ/mate
+harness=opencode
+
+### move onto hc
+moved smhc95821 from=herdr to=hc
+spawned smhc95821 harness=opencode kind=secondmate mode=secondmate yolo=off window=fm-hclab-smate-95924-18009:t1 worktree=<tmp>/fm-backend-hc-smate.Mu75YQ/mate
+exit=0
+
+### record after move
+window=fm-hclab-smate-95924-18009:t1
+endpoint_task_id=smhc95821
+worktree=<tmp>/fm-backend-hc-smate.Mu75YQ/mate
+project=<tmp>/fm-backend-hc-smate.Mu75YQ/mate
+harness=opencode
+kind=secondmate
+mode=secondmate
+yolo=off
+tasktmp=/tmp/fm-smhc95821
+model=default
+effort=default
+busy_gen=g1793640430.96501.20645
+spawn_gen=s1793640430.96149.21083
+backend=hc
+hc_session=fm-hclab-smate-95924-18009
+hc_terminal=t1
+home=<tmp>/fm-backend-hc-smate.Mu75YQ/mate
+projects=
+labels ok: herdr.space=fm-2ndmate-smhc95821-90e368a1 firstmate.home=firstmate-35595a1d
+agent state: alive
+{
+  "state": "live",
+  "labels": {
+    "firstmate.home": "firstmate-35595a1d",
+    "firstmate.task": "fm-smhc95821",
+    "herdr.space": "fm-2ndmate-smhc95821-90e368a1",
+    "herdr.tab": "firstmate-35595a1d-fm-smhc95821"
+  },
+  "foreground": {
+    "name": "opencode"
+  }
+}
+
+### adversarial: move alive hc mate to hc again
+error: second mate smhc95821 is already recorded on backend=hc; to restart it in place use bin/fm-control.sh smhc95821 relaunch
+exit=1
+
+### adversarial: move alive hc mate to tmux (tmux not installed on this host)
+error: second mate smhc95821's agent on hc could not be proven stopped, so nothing was moved and its record is unchanged: task smhc95821 runs on the hc backend, which has no recovery-grade agent-state classifier, so 'exit' cannot prove the agent actually stopped; refusing rather than reporting an unproven transition as done
+exit=1
+
+### adversarial: move a non-secondmate record
+error: task crewx is not a second mate; fm-secondmate-move moves kind=secondmate records only
+exit=1
+
+### adversarial: fm-spawn --secondmate --backend cmux
+error: backend=cmux does not support --secondmate spawns yet
+exit=1
+
+### usage: --help tail / no args exit
+Prints `moved <id> from=<old-backend> to=<new-backend>` followed by the
+spawn's own `spawned ...` line. Exit status: 0 moved; 1 refused or failed,
+with the message naming the state the mate was left in; 2 invalid use.
+exit=0
+no-args exit=2
+record unchanged and same agent pid 97353 still alive after all refusals
+LIVE_MOVE_COMPLETE
