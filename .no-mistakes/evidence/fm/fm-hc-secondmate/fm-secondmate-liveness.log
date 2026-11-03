@@ -1,0 +1,42 @@
+ok - fm_backend_tmux_agent_state: separates live, dead, missing, ambiguous, and unreadable
+ok - fm_backend_tmux_agent_state: rejects malformed targets before probing tmux
+ok - fm_backend_herdr_agent_state: preserves missing/no-agent/live/unknown husk behavior
+ok - fm_backend_agent_state: routes tmux/Herdr and keeps Zellij unverified
+ok - sweep: a confirmed-dead secondmate endpoint is killed and respawned
+ok - sweep: a dead secondmate respawns on its recorded backend, not a changed default
+ok - sweep: secondmate recovery resolves its durable account despite a different ambient login
+ok - sweep: distinct secondmate relaunches serialize across the task-set lock
+ok - sweep: a tmux secondmate whose close fails keeps the existing best-effort kill and guarded spawn
+ok - sweep: an already-live secondmate is untouched and distinguishable in verbose diagnostics
+ok - sweep: an authoritatively missing Pi secondmate window is relaunched
+ok - sweep: an authoritatively missing pi-signed secondmate window is relaunched
+ok - sweep: an existing ambiguous Pi process prevents duplicate recovery
+ok - sweep: transient target unreadability never licenses recovery
+ok - sweep: failed relaunch diagnostics distinguish a confidently missing endpoint
+ok - sweep: an unverified harness blocks recovery with a concrete diagnostic
+ok - sweep: idempotent by construction - a live secondmate is never re-touched on a later run
+ok - sweep: skipped entirely under FM_BOOTSTRAP_DETECT_ONLY=1, exactly like the other mutating sweeps
+ok - sweep: a silent no-op with no kind=secondmate meta present (a secondmate home's own natural scoping)
+ok - sweep: a mate mid-episode under the shared liveness lock is skipped entirely
+ok - relaunch: the spawn timeout bounds the lock wait before touching the endpoint
+ok - sweep: an unreadable or unwritable relaunch ledger refuses to kill or spawn
+ok - sweep: a dead hc secondmate terminal is closed, removed, and respawned in the mate's own space
+ok - sweep: a finished hc terminal is removed as a husk before the mate is respawned
+ok - sweep: an hc secondmate whose terminal is gone is respawned without touching the core
+ok - sweep: an alive hc secondmate is left exactly as it is
+ok - move: a live tmux secondmate is stopped, its endpoint closed, and the mate relaunched on hc in its own space
+ok - move: an already-stopped tmux secondmate is relaunched on hc without lifecycle input
+ok - move: an unmovable or unavailable target, a remote mate, an unclassifiable endpoint, and a refused stop all leave the mate untouched
+ok - move: a failed replacement launch leaves the previous record in place for recovery and says so
+ok - move: a failed launch leaves a record published since in place and says the previous one was not restored
+ok - move: a relaunch skipped after the stop says the agent was stopped, nothing launched, and the record is unchanged
+ok - move: --help and invalid use both print the header through its exit-status contract
+ok - move: a mate mid-episode under the shared liveness lock is refused entirely
+ok - move: a mate under another lifecycle action's control lock is refused entirely
+ok - poll probe: remote states map to the same contract as local, one call each
+ok - poll probe: unreachable or inconclusive remote reads preserve the route
+ok - full probe: a live rex route stays alive through the rex readiness gate
+ok - full probe: remote backend drift is reported, never migrated
+ok - full probe: rex readiness gaps and unreachable hosts stay explicit
+ok - full probe: a record without remote_backend stays a herdr route
+# all fm-secondmate-liveness tests passed
